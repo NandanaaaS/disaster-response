@@ -40,7 +40,41 @@ connectDB();
 app.get('/', (req, res) => {
   res.send("🚀 Server Running");
 });
+app.post('/requests', async (req, res) => {
+  try {
+    const data = req.body;
 
+    if (!data.requestID || !data.coords) {
+      return res.status(400).json({ error: "Invalid request data" });
+    }
+
+    data.status = data.status || "Pending";
+    data.createdAt = new Date();
+
+    await requestsCollection.insertOne(data);
+
+    res.status(201).json({
+      message: "Emergency request saved",
+      requestID: data.requestID
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+app.get('/requests', async (req, res) => {
+  try {
+    const requests = await requestsCollection
+      .find({})
+      .sort({ createdAt: -1 })
+      .toArray();
+
+    res.json(requests);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch requests" });
+  }
+});
 // Start server
 server.listen(PORT, () => {
   console.log(`🔥 Server running on port ${PORT}`);
