@@ -5,6 +5,7 @@ const http = require('http');
 const socketIo = require('socket.io');
 const cors = require('cors');
 const { MongoClient } = require('mongodb');
+const path=require('path');
 
 const app = express();
 const server = http.createServer(app);
@@ -16,7 +17,6 @@ const io = socketIo(server, {
 
 app.use(cors());
 app.use(express.json());
-
 const PORT = process.env.PORT || 3000;
 
 // MongoDB Setup
@@ -37,9 +37,9 @@ async function connectDB() {
 connectDB();
 
 // Basic route
-app.get('/', (req, res) => {
-  res.send("🚀 Server Running");
-});
+//app.get('/', (req, res) => {
+  //res.send("🚀 Server Running");
+//});
 app.post('/requests', async (req, res) => {
   try {
     const data = req.body;
@@ -110,6 +110,42 @@ app.patch('/requests/:id/status', async (req, res) => {
     res.status(500).json({ error: "Failed to update status" });
   }
 });
+app.get('/status/:id', async (req, res) => {
+  const { id } = req.params;
+  const reqData = await requestsCollection.findOne({ requestID: id });
+  if (!reqData) return res.status(404).json({ error: "Not found" });
+
+  res.json({ status: reqData.status });
+});
+app.post('/resolve', async (req, res) => {
+  const { id } = req.body;
+  if (!id) return res.status(400).json({ error: "Missing request ID" });
+
+  const result = await requestsCollection.updateOne(
+    { requestID: id },
+    { $set: { status: "Resolved", statusUpdatedAt: new Date() } }
+  );
+
+  if (result.matchedCount === 0) return res.status(404).json({ error: "Not found" });
+
+  io.emit("status-update", { requestID: id, status: "Resolved" });
+  res.json({ message: "Marked safe" });
+});
+app.get('/requests/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const request = await requestsCollection.findOne({ requestID: id });
+    if (!request) return res.status(404).json({ error: "Request not found" });
+    res.json(request);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+app.use('/',express.static(path.join(__dirname, '../frontend')));
+
+app.use('/dashboard', express.static(path.join(__dirname, '../dashboard')));
+
 io.on("connection", (socket) => {
   console.log("🟢 Client connected:", socket.id);
 
@@ -130,6 +166,12 @@ io.on("connection", (socket) => {
     console.log("🔴 Client disconnected:", socket.id);
   });
 });
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/home.html')); // home.html loads at /
+});
+//app.get(/.*/, (req, res) => {
+  //res.sendFile(path.join(__dirname, '../frontend/index.html'));
+//});
 // Start server
 server.listen(PORT, () => {
   console.log(`🔥 Server running on port ${PORT}`);
