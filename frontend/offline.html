@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emergency Access</title>
+
+<style>
+
+body{
+  margin:0;
+  font-family:Segoe UI;
+  background:#111;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
+  text-align:center;
+}
+
+.box{
+  padding:30px;
+  max-width:320px;
+}
+
+h1{
+  color:#ff5252;
+  margin-bottom:10px;
+}
+
+p{
+  color:#ccc;
+  margin-bottom:25px;
+}
+
+.btn{
+  display:block;
+  width:100%;
+  margin:12px 0;
+  padding:15px;
+  border:none;
+  border-radius:12px;
+  font-size:17px;
+  font-weight:bold;
+  background:#ff3b3b;
+  color:white;
+  box-shadow:0 0 15px rgba(255,0,0,0.6);
+}
+
+.btn:active{
+  transform:scale(0.96);
+}
+
+.pulse{
+  font-size:50px;
+  animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+  0%{opacity:1;}
+  50%{opacity:.4;}
+  100%{opacity:1;}
+}
+body{
+  user-select:none;
+  -webkit-user-select:none;
+  -ms-user-select:none;
+}
+
+input, textarea{
+  user-select:text;
+  -webkit-user-select:text;
+  -ms-user-select:text;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<div class="pulse">📡</div>
+
+<h1>No Internet</h1>
+<p>Don't worry. Emergency services are still reachable.</p>
+
+<button class="btn" onclick="call('100')">🚓 Police — 100</button>
+<button class="btn" onclick="call('101')">🚒 Fire — 101</button>
+<button class="btn" onclick="call('108')">🚑 Ambulance — 108</button>
+
+</div>
+
+<script>
+function call(num){
+  window.location.href="tel:"+num;
+}
+</script>
+
+</body>
+</html>

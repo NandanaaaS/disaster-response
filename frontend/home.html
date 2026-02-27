@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Guardian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family:Segoe UI, sans-serif;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: linear-gradient(135deg,#ffe0b2,#dcedc8);
+}
+
+.card{
+  background:white;
+  padding:40px;
+  border-radius:20px;
+  text-align:center;
+  width:330px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.2);
+}
+
+h1{
+  margin-bottom:10px;
+  color:#333;
+}
+
+.status{
+  font-size:13px;
+  margin-bottom:20px;
+  color:#666;
+}
+
+.btn{
+  display:block;
+  width:100%;
+  padding:14px;
+  margin:12px 0;
+  border:none;
+  border-radius:12px;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.help{ background:#ff8a65; color:white; }
+.help:hover{ background:#ff7043; }
+
+.visitor{ background:#aed581; }
+.visitor:hover{ background:#9ccc65; }
+
+.rescuer{ background:#81d4fa; }
+.rescuer:hover{ background:#4fc3f7; }
+
+.map{ background:#ffd54f; }
+.map:hover{ background:#ffca28; }
+
+body{
+  user-select:none;
+  -webkit-user-select:none;
+  -ms-user-select:none;
+}
+
+input, textarea{
+  user-select:text;
+  -webkit-user-select:text;
+  -ms-user-select:text;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>Guardian</h1>
+  <div id="status" class="status">Checking location...</div>
+
+  <button class="btn help" onclick="location.href='index.html'">
+    Need Help
+  </button>
+
+  <button class="btn rescuer" onclick="location.href='dashboard/index.html'">
+    Rescuer
+  </button>
+
+  <button class="btn map" onclick="location.href='map.html'">
+    View Map
+  </button>
+</div>
+
+<script>
+// Only handle online logic here
+const statusText = document.getElementById("status");
+
+// Geolocation for online users
+if(!localStorage.getItem("userLat")){
+  navigator.geolocation.getCurrentPosition(
+    (pos)=>{
+      localStorage.setItem("userLat", pos.coords.latitude);
+      localStorage.setItem("userLng", pos.coords.longitude);
+      statusText.innerText="Location access granted ✔";
+    },
+    ()=>{
+      statusText.innerText="Location permission denied ❌";
+    }
+  );
+} else {
+  statusText.innerText="Location already saved ✔";
+}
+
+// Register service worker
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js")
+    .then(()=>console.log("Service Worker Registered"));
+}
+</script>
+
+</body>
+</html>
