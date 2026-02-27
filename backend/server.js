@@ -52,7 +52,7 @@ app.post('/requests', async (req, res) => {
     data.createdAt = new Date();
 
     await requestsCollection.insertOne(data);
-
+    io.emit("new-request",data);
     res.status(201).json({
       message: "Emergency request saved",
       requestID: data.requestID
@@ -74,6 +74,61 @@ app.get('/requests', async (req, res) => {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch requests" });
   }
+});
+app.patch('/requests/:id/status', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    if (!status) {
+      return res.status(400).json({ error: "Status is required" });
+    }
+
+    const result = await requestsCollection.updateOne(
+      { requestID: id },
+      { 
+        $set: { 
+          status,
+          statusUpdatedAt: new Date()
+        } 
+      }
+    );
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ error: "Request not found" });
+    }
+
+    // 🔔 Notify victim + responders in real-time
+    io.emit("status-update", {
+      requestID: id,
+      status
+    });
+
+    res.json({ message: "Status updated successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to update status" });
+  }
+});
+io.on("connection", (socket) => {
+  console.log("🟢 Client connected:", socket.id);
+
+  socket.on("location-update", async (data) => {
+    const { requestID, coords } = data;
+
+    if (!requestID || !coords) return;
+
+    await requestsCollection.updateOne(
+      { requestID },
+      { $set: { coords, lastUpdated: new Date() } }
+    );
+
+    io.emit("location-update", data);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("🔴 Client disconnected:", socket.id);
+  });
 });
 // Start server
 server.listen(PORT, () => {
