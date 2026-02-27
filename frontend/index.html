@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Guardian – Emergency</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+margin:0;
+font-family:Segoe UI, sans-serif;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background: linear-gradient(135deg,#ffe0b2,#dcedc8);
+}
+
+.card{
+background:white;
+padding:35px;
+border-radius:20px;
+width:340px;
+box-shadow:0 15px 40px rgba(0,0,0,0.2);
+}
+
+h1{
+text-align:center;
+margin-bottom:20px;
+}
+
+label{
+font-weight:600;
+display:block;
+margin-top:12px;
+}
+
+input, select{
+width:100%;
+padding:10px;
+margin-top:6px;
+border-radius:10px;
+border:1px solid #ccc;
+font-size:14px;
+}
+
+button{
+margin-top:20px;
+width:100%;
+padding:14px;
+border:none;
+border-radius:12px;
+font-size:16px;
+font-weight:bold;
+background:#ff8a65;
+color:white;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#ff7043;
+}
+
+#status{
+text-align:center;
+margin-top:15px;
+font-weight:600;
+}
+
+#requestStatus{
+text-align:center;
+margin-top:8px;
+font-weight:700;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>Emergency Request</h1>
+
+<form id="helpForm">
+
+<label>Emergency Type</label>
+<select id="type">
+<option>Fire</option>
+<option>Medical</option>
+<option>Flood</option>
+<option>Rescue</option>
+<option>Harassment</option>
+<option>Fight</option>
+<option>Accident</option>
+<option>Robbery</option>
+<option>Other</option>
+</select>
+
+<label>Description (optional)</label>
+<input id="desc" placeholder="Optional details...">
+
+<label>Gender</label>
+<select id="gender" onchange="togglePregnancy()">
+<option>Male</option>
+<option>Female</option>
+<option>Other</option>
+</select>
+
+<div id="pregnancyBox" style="display:none;">
+<label>Pregnant?</label>
+<select id="pregnant">
+<option>No</option>
+<option>Yes</option>
+</select>
+</div>
+
+<label>Age Range</label>
+<select id="age">
+<option>0–12</option>
+<option>13–18</option>
+<option>19–30</option>
+<option>31–50</option>
+<option>51–65</option>
+<option>65–80</option>
+<option>80+</option>
+</select>
+
+<button type="button" onclick="saveLocation()">Save My Location To Map</button>
+<button type="submit">Send Help</button>
+
+</form>
+
+<p id="status">Waiting for location...</p>
+<p id="requestStatus">Status: Waiting...</p>
+
+</div>
+
+<script src="script.js"></script>
+
+<script>
+function togglePregnancy(){
+const gender=document.getElementById("gender").value;
+document.getElementById("pregnancyBox").style.display =
+gender==="Female" ? "block" : "none";
+}
+</script>
+
+</body>
+</html>
