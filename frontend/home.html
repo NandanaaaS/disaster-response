@@ -60,35 +60,44 @@ h1{
 .map{ background:#ffd54f; }
 .map:hover{ background:#ffca28; }
 
+body{
+  user-select:none;
+  -webkit-user-select:none;
+  -ms-user-select:none;
+}
+
+input, textarea{
+  user-select:text;
+  -webkit-user-select:text;
+  -ms-user-select:text;
+}
 </style>
 </head>
 <body>
 
 <div class="card">
+  <h1>Guardian</h1>
+  <div id="status" class="status">Checking location...</div>
 
-<h1>Guardian</h1>
-<div id="status" class="status">Checking location...</div>
+  <button class="btn help" onclick="location.href='index.html'">
+    Need Help
+  </button>
 
-<button class="btn help" onclick="location.href='index.html'">
-Need Help
-</button>
+  <button class="btn rescuer" onclick="location.href='dashboard/index.html'">
+    Rescuer
+  </button>
 
-<button class="btn rescuer" onclick="location.href='dashboard/index.html'">
-Rescuer
-</button>
-
-<button class="btn map" onclick="location.href='map.html'">
-View Map
-</button>
-
+  <button class="btn map" onclick="location.href='map.html'">
+    View Map
+  </button>
 </div>
 
 <script>
-
+// Only handle online logic here
 const statusText = document.getElementById("status");
 
+// Geolocation for online users
 if(!localStorage.getItem("userLat")){
-
   navigator.geolocation.getCurrentPosition(
     (pos)=>{
       localStorage.setItem("userLat", pos.coords.latitude);
@@ -99,11 +108,15 @@ if(!localStorage.getItem("userLat")){
       statusText.innerText="Location permission denied ❌";
     }
   );
-
-}else{
+} else {
   statusText.innerText="Location already saved ✔";
 }
 
+// Register service worker
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js")
+    .then(()=>console.log("Service Worker Registered"));
+}
 </script>
 
 </body>

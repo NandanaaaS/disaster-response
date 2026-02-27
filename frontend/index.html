@@ -72,6 +72,17 @@ text-align:center;
 margin-top:8px;
 font-weight:700;
 }
+body{
+  user-select:none;
+  -webkit-user-select:none;
+  -ms-user-select:none;
+}
+
+input, textarea{
+  user-select:text;
+  -webkit-user-select:text;
+  -ms-user-select:text;
+}
 </style>
 </head>
 
@@ -126,7 +137,7 @@ font-weight:700;
 </select>
 
 <button type="button" onclick="saveLocation()">Save My Location To Map</button>
-<button type="submit">Send Help</button>
+<button type="submit">Send Help Request</button>
 
 </form>
 
