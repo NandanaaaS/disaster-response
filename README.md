@@ -5,6 +5,7 @@
 
 ## Team Members
 **Member 1:** Nandana S - Model Engineering College
+
 **Member 2:** Aida Elizabeth Saju - Model Engineering College
 
 ## Hosted Project Link
@@ -47,11 +48,24 @@ Guardian follows a Client-Server-Database architecture. The backend acts as a re
 - **Tools used:** VS Code, Git, Render (Hosting), MongoDB Atlas
 
 ## Features
-- **Feature 1: Live GPS Tracking:** Continuous coordinate updates from victim to responder.
-- **Feature 2: Real-time Alerts:** Instant audio and toast notifications for responders when a new request is made.
-- **Feature 3: Offline Resilience:** Service Worker integration to provide an "Offline Mode" page if the network fails.
-- **Feature 4: Automated Routing:** Built-in navigation that draws the shortest path between the responder and the victim.
+Key Features (Expanded)
+Feature 1: Live "Moving" Markers
+Instead of static pins, the map uses socket.emit('location-update') to move markers in real-time. If a victim is being moved or is walking, their marker on the responder's map glides to the new coordinates automatically.
 
+Feature 2: Smart Triage System
+The responder's dashboard isn't just a map; it's a prioritization tool. Markers are color-coded:
+
+🔴 Red: Pending (Needs immediate attention).
+
+🟠 Orange: In Progress (A responder is on the way).
+
+🟢 Green: Resolved (Victim is safe).
+
+Feature 3: One-Tap Navigation
+Responders can click a "Route" button on any victim's popup. The system instantly calculates the distance and draws a polyline path from the responder's current GPS location to the victim's precise coordinates using the OSRM (Open Source Routing Machine).
+
+Feature 4: Audio-Visual Emergency Broadcast
+To ensure no emergency is missed, the system uses the Web Audio API. When a new-request socket event is received, a high-priority alert sound plays, and a non-blocking "Toast" notification appears, even if the responder is looking at a different part of the map.
 ## Implementation
 
 ### Installation
