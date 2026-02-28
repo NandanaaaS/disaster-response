@@ -1,7 +1,7 @@
 # Guardian 🎯
 
 ## Basic Details
-**Team Name:** [Your Team Name]
+**Team Name:** Sarvam Coding
 
 ## Team Members
 **Member 1:** Nandana - [Your College Name]
