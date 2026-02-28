@@ -49,6 +49,7 @@ Guardian follows a Client-Server-Database architecture. The backend acts as a re
 
 ## Features
 Key Features (Expanded)
+
 Feature 1: Live "Moving" Markers
 Instead of static pins, the map uses socket.emit('location-update') to move markers in real-time. If a victim is being moved or is walking, their marker on the responder's map glides to the new coordinates automatically.
 
@@ -66,6 +67,7 @@ Responders can click a "Route" button on any victim's popup. The system instantl
 
 Feature 4: Audio-Visual Emergency Broadcast
 To ensure no emergency is missed, the system uses the Web Audio API. When a new-request socket event is received, a high-priority alert sound plays, and a non-blocking "Toast" notification appears, even if the responder is looking at a different part of the map.
+
 ## Implementation
 
 ## 📂 Project Structure
