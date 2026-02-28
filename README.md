@@ -3,46 +3,39 @@
 ## Basic Details
 **Team Name:** [Your Team Name]
 
-**Team Members**
-* **Member 1:** Nandana - [Your College Name]
-* **Member 2:** [Name] - [College]
+## Team Members
+**Member 1:** Nandana - [Your College Name]
 
 ## Hosted Project Link
 [https://disaster-response-2.onrender.com](https://disaster-response-2.onrender.com)
 
 ## Project Description
-Guardian is a real-time disaster response platform that allows victims to broadcast emergency requests with live GPS coordinates. It provides responders with a centralized dashboard featuring live mapping and automated routing to reach victims faster.
+Guardian is a real-time emergency response system that connects victims with responders. It uses live GPS tracking and WebSockets to ensure help reaches the exact location as fast as possible.
 
-## The Problem Statement
-During disasters, communication is chaotic. Victims often cannot describe their exact location, and rescue teams lack a synchronized way to track multiple emergencies simultaneously, leading to inefficient response times.
+## The Problem statement
+During disasters, communication is chaotic. Victims cannot always explain their location, and responders often lack a real-time "live map" of where help is needed most, leading to wasted time and lost lives.
 
 ## The Solution
-We solve this by using WebSockets for instant data transmission and Leaflet maps for visual coordination. Our system includes a Service Worker for offline resilience and a live tracking loop that updates the responder on the victim's movements in real-time.
+We solve this by using a dual-interface web app. Victims broadcast their location with one click. Responders see these as live markers on a map and receive instant audio alerts, with automated routing to the victim's GPS coordinates.
 
 ## Technical Details
 
 ### Technologies/Components Used
-
 **For Software:**
-* **Languages used:** JavaScript (ES6+), HTML5, CSS3
-* **Frameworks used:** Express.js, Node.js
-* **Libraries used:** Socket.io, Leaflet.js, Leaflet-Routing-Machine, MongoDB Driver
-* **Tools used:** VS Code, Git, Render, MongoDB Atlas
+- **Languages used:** JavaScript (ES6+), HTML5, CSS3
+- **Frameworks used:** Node.js, Express.js
+- **Libraries used:** Socket.io (Real-time), Leaflet.js (Mapping), MongoDB Driver, dotenv
+- **Tools used:** VS Code, Git, Render (Hosting), MongoDB Atlas
 
 ## Features
-
-* **Real-time Emergency Broadcasting:** Victims can send SOS alerts with one click.
-* **Live GPS Tracking:** Continuous location updates sent via Socket.io to rescuers.
-* **Responder Dashboard:** An interactive map that plots all active "Pending" and "In Progress" requests.
-* **Intelligent Routing:** Automatically calculates the fastest route from the responder's current location to the victim.
-* **Offline Resilience:** PWA features (Service Worker) to ensure the interface remains accessible during network drops.
+- **Feature 1: Live GPS Tracking:** Continuous coordinate updates from victim to responder.
+- **Feature 2: Real-time Alerts:** Instant audio and toast notifications for responders when a new request is made.
+- **Feature 3: Offline Resilience:** Service Worker integration to provide an "Offline Mode" page if the network fails.
+- **Feature 4: Automated Routing:** Built-in navigation that draws the shortest path between the responder and the victim.
 
 ## Implementation
 
 ### Installation
 ```bash
-# Navigate to the backend folder
 cd backend
-
-# Install all dependencies
 npm install
