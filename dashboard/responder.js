@@ -56,7 +56,7 @@ if (navigator.geolocation) {
 }
 const markers = {};
 
-fetch('http://localhost:3000/requests')
+fetch('/requests')
   .then(res => res.json())
   .then(data => {
     data.forEach(req => {
@@ -79,7 +79,7 @@ fetch('http://localhost:3000/requests')
     });
   });
 
-const socket = io('http://localhost:3000');
+const socket = io();
 socket.on("status-update", ({ requestID, status }) => {
   const marker = markers[requestID];
 
@@ -165,7 +165,7 @@ function popupHTML(req) {
   `;
 }
 function updateStatus(requestID, status) {
-  fetch(`http://localhost:3000/requests/${requestID}/status`, {
+  fetch(`/requests/${requestID}/status`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ status })
