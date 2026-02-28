@@ -6,12 +6,11 @@ const FILES_TO_CACHE = [
   OFFLINE_URL,
   "style.css",
   "script.js",
-  "responder.html",
-  "responder.js",
+  "../dashboard/responder.html",
+  "../dashboard/responder.js",
   "alert.mp3",
   "home.html",
   "index.html",
-  "sw.js"
 ];
 
 self.addEventListener("install", (event) => {
