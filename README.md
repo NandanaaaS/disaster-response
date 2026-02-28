@@ -48,7 +48,6 @@ Guardian follows a Client-Server-Database architecture. The backend acts as a re
 - **Tools used:** VS Code, Git, Render (Hosting), MongoDB Atlas
 
 ## Features
-Key Features (Expanded)
 
 Feature 1: Live "Moving" Markers
 Instead of static pins, the map uses socket.emit('location-update') to move markers in real-time. If a victim is being moved or is walking, their marker on the responder's map glides to the new coordinates automatically.
