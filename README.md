@@ -68,7 +68,93 @@ Feature 4: Audio-Visual Emergency Broadcast
 To ensure no emergency is missed, the system uses the Web Audio API. When a new-request socket event is received, a high-priority alert sound plays, and a non-blocking "Toast" notification appears, even if the responder is looking at a different part of the map.
 ## Implementation
 
+## 📂 Project Structure
+
+A clear overview of the directory hierarchy and the responsibility of each core file.
+
+```text
+disaster-response/
+├── backend/
+│   ├── server.js          # Express server, MongoDB connection & Socket.io logic
+│   ├── .env               # Environment variables (Mongo URI, Port)
+│   └── package.json       # Backend dependencies & scripts
+├── frontend/              # Victim-facing portal
+│   ├── home.html          # Landing page
+│   ├── index.html         # Emergency request form
+│   ├── script.js          # Geolocation tracking & Victim-side Sockets
+│   ├── sw.js              # Service Worker for PWA & Offline caching
+│   ├── style.css          # Global styling
+│   └── offline.html       # Fallback page for network failures
+└── dashboard/             # Responder-facing Command Center
+    ├── responder.html     # Interactive Map UI (Leaflet.js)
+    ├── responder.js       # Map logic, Real-time markers & Routing
+    └── alert.mp3          # Emergency notification sound
+```
+
 ### Installation
 ```bash
 cd backend
 npm install
+### Run
+# To start the server in production mode
+npm start
+```
+### Project Documentation
+![WhatsApp Image 2026-02-28 at 08 05 55](https://github.com/user-attachments/assets/8db5c0ac-e5f3-42ce-8c49-4137a7b51f68) 
+Home page
+![WhatsApp Image 2026-02-28 at 08 05 54](https://github.com/user-attachments/assets/7f8931f4-818c-4bea-9e3e-2e9c26de3bac) 
+Home page without internet
+![WhatsApp Image 2026-02-28 at 08 04 57](https://github.com/user-attachments/assets/e84ea1b8-0431-494a-a4c6-08cf82bc46a2) 
+Responder Dashboard with route to a help request
+![WhatsApp Image 2026-02-28 at 08 04 56](https://github.com/user-attachments/assets/c5acb852-9754-4777-bf0f-7f6a26fd15a5) 
+Form to request help
+
+🌐API Documentation
+
+The backend provides a RESTful API to manage emergency requests and state persistence.
+
+**Base URL:** `https://disaster-response-2.onrender.com`
+
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| **GET** | `/requests` | Fetches all active emergency requests from MongoDB. |
+| **POST** | `/requests` | Creates a new emergency alert with victim metadata. |
+| **PATCH** | `/requests/:id/status` | Updates request state (`Pending` -> `In Progress` -> `Resolved`). |
+| **GET** | `/requests/:id` | Retrieves details for a specific unique Request ID. |
+
+### Sample Status Update (PATCH)
+**Request Body:**
+```json
+{
+  "status": "In Progress"
+}
+```
+### Project Demo
+[https://drive.google.com/drive/folders/1VY5jaID9HVQ1rH3v7BlSsMboPJI0Wc6R](https://drive.google.com/drive/folders/1VY5jaID9HVQ1rH3v7BlSsMboPJI0Wc6R)
+In this demonstration, we showcase a Disaster Response system designed to connect victims and responders efficiently. The video highlights the following features:
+
+Home Page Navigation: Users can navigate to the Victim page, Responder page, and access the Offline page when there’s no internet.
+
+Victim Emergency Requests: Victims can submit help requests with location details, which are sent in real-time to the system.
+
+Responder Dashboard: Responders can view nearby emergencies, access victim details, and take action on requests.
+
+Request Status Updates: Victims receive live updates from responders about the status of their requests.
+
+Completion Handling: Once a responder marks a request as rescued, the corresponding location is removed from the system to avoid clutter.
+
+Offline Page: Displays relevant information or guidance when the user is offline, ensuring usability without internet.
+
+Geolocation Feature: The system automatically detects user location using the Browser Geolocation API to provide accurate nearby emergency data.
+
+Real-Time Updates: The dashboard updates dynamically with incoming requests, ensuring quick response.
+
+Mobile Compatibility: The interface is responsive, working seamlessly on mobile and desktop devices.
+
+Deployment Ready: The frontend is hosted on Netlify, and the backend is integrated with Node.js/Express and MongoDB Atlas.
+
+The video demonstrates the workflow from submitting an emergency request as a victim, monitoring request status updates, responders taking action, and successfully completing requests, highlighting real-time updates, offline support, and user-friendly design.
+
+### Team Contributions
+Nandana- Developed backend using Node.js & Express, integrated MongoDB Atlas, implemented real-time updates with Socket.io, and managed server deployment, Developed frontend for the responser dashboard
+Aida- Developed the responsive frontend of a Disaster Response system with interactive maps, geolocation-based emergency tracking, and real-time updates. Implemented user interfaces for victims and responders, integrated with a Node.js backend, and ensured smooth API communication.Ensured seamless user experience
