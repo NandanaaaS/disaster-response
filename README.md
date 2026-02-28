@@ -4,21 +4,40 @@
 **Team Name:** Sarvam Coding
 
 ## Team Members
-**Member 1:** Nandana - [Your College Name]
+**Member 1:** Nandana S - Model Engineering College
+**Member 2:** Aida Elizabeth Saju - Model Engineering College
 
 ## Hosted Project Link
 [https://disaster-response-2.onrender.com](https://disaster-response-2.onrender.com)
 
 ## Project Description
-Guardian is a real-time emergency response system that connects victims with responders. It uses live GPS tracking and WebSockets to ensure help reaches the exact location as fast as possible.
+Guardian is a full-stack, real-time disaster management and emergency coordination platform designed to bridge the critical "information gap" during life-threatening situations. Unlike standard reporting tools, Guardian functions as a live bridge between victims and responders by utilizing bi-directional WebSocket communication and Geospatial mapping.
+
+The system is split into two specialized interfaces:
+
+The Victim Interface: A mobile-responsive portal designed for high-stress usability. It captures precise GPS coordinates via the Geolocation API and allows victims to specify emergency types (Medical, Fire, Flood) and personal vitals (Age, Gender, Pregnancy status).
+
+The Responder Command Center: A centralized dashboard that provides a "Tactical View" of all active incidents using Leaflet.js. It features instant audio-visual alerting and an automated navigation engine that calculates the most efficient route to victims in real-time.
 
 ## The Problem statement
-During disasters, communication is chaotic. Victims cannot always explain their location, and responders often lack a real-time "live map" of where help is needed most, leading to wasted time and lost lives.
+In the wake of natural disasters or sudden accidents, two major failures occur:
+
+The Localization Failure: Victims under stress often cannot articulate their exact location, especially in unfamiliar or devastated areas where landmarks are gone.
+
+The Latency Failure: Traditional emergency reporting (calls/SMS) is linear and slow. Emergency dispatchers often lack a unified, visual map of concurrent incidents, making it impossible to prioritize high-risk victims (e.g., elderly or pregnant individuals) effectively.
 
 ## The Solution
-We solve this by using a dual-interface web app. Victims broadcast their location with one click. Responders see these as live markers on a map and receive instant audio alerts, with automated routing to the victim's GPS coordinates.
+Guardian addresses these failures through three core technological pillars:
+
+Real-Time Synchronization: Using Socket.io, the platform eliminates the need for page refreshes. As soon as a victim moves or their status changes, the Responder’s map marker moves instantly on the dashboard.
+
+Intelligent Triage: By collecting specific metadata (age/gender/condition), the system allows responders to prioritize their efforts based on the vulnerability of the victim.
+
+Network Resilience (PWA): Leveraging Service Workers, the application remains accessible even in areas with intermittent connectivity. If a user loses signal, the application serves an offline-ready interface which gives the  from the local cache, ensuring the UI doesn't crash during a crisis.
 
 ## Technical Details
+### Architecture Overview:
+Guardian follows a Client-Server-Database architecture. The backend acts as a real-time message broker using WebSockets to ensure sub-second latency between a victim's request and the responder's alert.
 
 ### Technologies/Components Used
 **For Software:**
